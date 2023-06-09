@@ -1,35 +1,31 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { StockModule } from 'src/my/stock.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Stock } from './my/entity/my/stock_entity';
 import { Keluar } from './my/entity/my/keluar_entity';
 import { KeluarModule } from './my/keluar.module';
-import { LoginModule } from './my/login.module';
-import { Login } from './my/entity/my/login_entity';
 import { MasukModule } from './my/masuk.module';
 import { Masuk } from './my/entity/my/masuk_entity';
 import { Supplier } from './my/entity/my/supplier_entity';
 import { SupplierModule } from './my/supplier.module';
+import { ApiModule } from './api/api.module';
+import { getEnvPath } from './common/helper/env.helper';
+import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
+import { ConfigModule } from '@nestjs/config';
+import { User } from './api/user/user.entity';
+
+const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'hesa2006',
-      database: 'stockbarang',
-      entities: [Stock, Keluar, Login, Masuk, Supplier],
-      synchronize: true,
-    }),
-    StockModule,
+    ConfigModule.forRoot({ envFilePath, isGlobal: true }),
+    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    TypeOrmModule.forFeature([User]),
+    ApiModule,
     KeluarModule,
-    LoginModule,
     MasukModule,
     SupplierModule,
+    ApiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

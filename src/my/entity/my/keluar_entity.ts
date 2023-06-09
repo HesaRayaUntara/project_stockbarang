@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { v4 as uuid4 } from 'uuid';
-import { Stock } from './stock_entity';
 import { Masuk } from './masuk_entity';
 
 const moment = require('moment-timezone');

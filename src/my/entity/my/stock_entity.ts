@@ -1,16 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+// import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity()
-export class Stock {
-  @PrimaryGeneratedColumn('uuid')
-  idstock: string;
+// @Entity()
+// export class Stock {
+//   @PrimaryGeneratedColumn('uuid')
+//   idstock: string;
 
-  @Column()
-  nama_barang: string;
+//   @Column()
+//   nama_barang: string;
 
-  @Column()
-  jumlah: number;
+//   @Column()
+//   jumlah: number;
 
-  @Column({ default: false }) // Tambahkan properti ini sesuai kebutuhan
-  isBarangKeluar: boolean;
-}
+//   @Column({ default: false }) // Tambahkan properti ini sesuai kebutuhan
+//   isBarangKeluar: boolean;
+// }
