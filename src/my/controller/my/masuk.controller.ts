@@ -38,13 +38,4 @@ export class MasukController {
     const masuk = await this.masukService.findOne(id);
     await this.masukService.delete(id);
   }
-
-  // @Delete(':id')
-  // async delete(@Param('id') id: string): Promise<void> {
-  //   const masuk = await this.masukService.findOne(id);
-  //   const keluarIds = masuk.keluar.map(keluar => keluar.idkeluar);
-  //   await Promise.all(keluarIds.map(keluarId => this.keluarService.delete(keluarId)));
-  //   await this.masukService.delete(id);
-  // }
-
 }

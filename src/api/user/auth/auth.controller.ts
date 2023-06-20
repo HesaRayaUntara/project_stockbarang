@@ -23,8 +23,8 @@ export class AuthController {
   }
 
   @Get('login')
-  async findAll(): Promise<User[]> { // Mengubah tipe pengembalian menjadi Promise<User[]>
-    return await this.service.findAll(); // Menggunakan metode findAll pada service
+  async findAll(): Promise<User[]> { 
+    return await this.service.findAll(); 
   }
 
   @Post('refresh')

@@ -52,8 +52,10 @@ export class MasukService {
       throw new NotFoundException('Masuk tidak ditemukan');
     }
     masuk.jumlah -= jumlahKeluar;
+  
     return await this.masukRepository.save(masuk);
   }
+  
 
   async delete(id: string): Promise<void> {
     const masuk = await this.masukRepository.findOne({ where: { idbarang: id } });

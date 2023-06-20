@@ -30,7 +30,5 @@ export class Masuk {
 
   @Column({ type: 'timestamp with time zone', default: () => "now() at time zone 'Asia/Jakarta'" })
   tanggal: Date;
-
-  // @OneToMany(() => Keluar, keluar => keluar.masuk, { cascade: true })
-  // keluar: Keluar[];
+  
 }

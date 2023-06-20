@@ -50,21 +50,34 @@ export class KeluarService {
     return null;
   }
 
-  async tambahJumlahMasuk(idbarang: string, jumlahMasuk: number): Promise<Masuk> {
+  async kurangiJumlahMasuk(idbarang: string, jumlahKeluar: number): Promise<Masuk> {
     const masuk = await this.masukService.findOne(idbarang);
     if (!masuk) {
-      throw new NotFoundException('Masuk tidak ditemukan');
+      throw new NotFoundException('Barang masuk tidak ditemukan');
     }
-    masuk.jumlah += jumlahMasuk;
-    return await this.masukService.update(idbarang, masuk); // Ganti dengan update()
-  }
-  
+    masuk.jumlah -= jumlahKeluar;
+    return await this.masukService.update(idbarang, masuk);
+  }  
+
+  // async tambahJumlahMasuk(idbarang: string, jumlahMasuk: number): Promise<Masuk> {
+  //   const masuk = await this.masukService.findOne(idbarang);
+  //   if (!masuk) {
+  //     throw new NotFoundException('Masuk tidak ditemukan');
+  //   }
+  //   masuk.jumlah += jumlahMasuk;
+  //   return await this.masukService.update(idbarang, masuk);
+  // }
+
+  // async delete(id: string): Promise<void> {
+  //   const keluar = await this.keluarRepository.findOne({ where: { idkeluar: id } });
+  //   if (keluar) {
+  //     await this.tambahJumlahMasuk(keluar.idbarang, keluar.jumlah);
+  //     await this.keluarRepository.remove(keluar);
+  //   }
+  // }  
 
   async delete(id: string): Promise<void> {
-    const keluar = await this.keluarRepository.findOne({ where: { idkeluar: id } });
-    if (keluar) {
-      await this.tambahJumlahMasuk(keluar.idbarang, keluar.jumlah); // Ganti keluar.nama_barang menjadi keluar.idbarang
-      await this.keluarRepository.remove(keluar); // Ganti delete() dengan remove()
-    }
-  }  
+    await this.keluarRepository.delete(id);
+  }
+
 }

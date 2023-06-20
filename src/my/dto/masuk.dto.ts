@@ -5,7 +5,6 @@ export class MasukDto {
   @IsString()
   nama_barang: string;
 
-  @IsNotEmpty()
   @IsString()
   keterangan: string;
 

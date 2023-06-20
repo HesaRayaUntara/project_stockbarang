@@ -24,8 +24,5 @@ export class Keluar {
 
   @Column({nullable : true})
   idbarang: string;
-  
-  // @ManyToOne(() => Masuk, masuk => masuk.keluar, { onDelete: 'CASCADE' })
-  // @JoinColumn({ name: 'idkeluar', referencedColumnName: 'idkeluar' })
-  // masuk: Masuk;
+
 }

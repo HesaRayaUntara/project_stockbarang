@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Keluar } from './my/entity/my/keluar_entity';
 import { KeluarModule } from './my/keluar.module';
 import { MasukModule } from './my/masuk.module';
@@ -10,16 +10,29 @@ import { Supplier } from './my/entity/my/supplier_entity';
 import { SupplierModule } from './my/supplier.module';
 import { ApiModule } from './api/api.module';
 import { getEnvPath } from './common/helper/env.helper';
-import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
-import { ConfigModule } from '@nestjs/config';
 import { User } from './api/user/user.entity';
-
-const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath, isGlobal: true }),
-    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    ConfigModule.forRoot({ envFilePath: getEnvPath(`${__dirname}/common/envs`), isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        database: 'stockbarang',
+        username: 'postgres',
+        password: 'hesa2006',
+        entities: [User, Keluar, Masuk, Supplier],
+        migrations: ['dist/migrations/*.{ts,js}'],
+        migrationsTableName: 'typeorm_migrations',
+        logger: 'file',
+        synchronize: true,
+        autoLoadEntities: true,
+      }),
+    }),
     TypeOrmModule.forFeature([User]),
     ApiModule,
     KeluarModule,
@@ -31,4 +44,3 @@ const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
   providers: [AppService],
 })
 export class AppModule {}
-

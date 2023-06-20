@@ -13,4 +13,5 @@ export class Supplier {
 
   @Column()
   telepon: string;
+  
 }
