@@ -55,6 +55,16 @@ export class MasukService {
     return await this.masukRepository.save(masuk);
   }
 
+  async tambahJumlahMasuk(nama_barang: string, jumlahKeluar: number): Promise<Masuk> {
+    const masuk = await this.masukRepository.findOneOrFail({ where: { nama_barang } });
+    if (!masuk) {
+      throw new NotFoundException('Masuk tidak ditemukan');
+    }
+    masuk.jumlah += jumlahKeluar;
+    return await this.masukRepository.save(masuk);
+  }
+
+
   async delete(id: string): Promise<void> {
     const masuk = await this.masukRepository.findOne({ where: { idbarang: id } });
     if (masuk) {

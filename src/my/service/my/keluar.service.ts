@@ -51,6 +51,10 @@ export class KeluarService {
   }
 
   async delete(id: string): Promise<void> {
-    await this.keluarRepository.delete(id);
+    const deletedKeluar = await this.keluarRepository.findOne({ where: { idkeluar: id } });
+    if (deletedKeluar) {
+      await this.keluarRepository.delete(id);
+      await this.masukService.tambahJumlahMasuk(deletedKeluar.nama_barang, deletedKeluar.jumlah);
+    }
   }
 }
